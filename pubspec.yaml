@@ -1,0 +1,21 @@
+name: google_map_polyline
+description: Gives the polyline coordinates to set polylines in Google Map.
+version: 0.0.2
+author: Shakir Samoon <shakirsamoon@gmail.com>
+homepage: https://github.com/Shark01/google_map_polyline
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  google_maps_flutter: ^0.5.19+2
+  dio: ^2.1.10
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
