@@ -17,10 +17,10 @@ To use this plugin, add `google_map_polyline` as a [dependency in your pubspec.y
 - Get an API key at [https://cloud.google.com/maps-platform/](https://cloud.google.com/maps-platform/).
 	 (This plugin only requires **Directions API**.)
 
-		```dart
+	```dart
 		GoogleMapPolyline googleMapPolyline = 
-					new  GoogleMapPolyline(apiKey:  "YOUR KEY HERE");
-		```
+			new  GoogleMapPolyline(apiKey:  "YOUR KEY HERE");
+	```
 		
 2. Now you may able retrieve coordinates for the Polyline route.
 
