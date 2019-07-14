@@ -11,7 +11,7 @@ This package made with the inspiration of `flutter_polyline_points`.
 
 To use this plugin, add `google_map_polyline` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
 
-### Example 
+### Example
 
 1. First you need to create object using your **Google Maps API key**.
 - Get an API key at [https://cloud.google.com/maps-platform/](https://cloud.google.com/maps-platform/).
@@ -44,6 +44,10 @@ To use this plugin, add `google_map_polyline` as a [dependency in your pubspec.y
 ### Overview
 - [x] Coordinates with Location Coordinates (Latitude and Longitude)
 - [x] Coordinates with Location Address
+- [x] Route Modes
+  	- [x] Driving
+  	- [x] Walking
+  	- [x] Bicycling
 - [ ] Coordinates with Location Coordinates and Address (example: Origin as address and Destination as coordinates)
 - [ ] Alternative routes
 

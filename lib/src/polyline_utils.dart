@@ -1,5 +1,5 @@
-
 import 'package:dio/dio.dart';
+import 'package:google_map_polyline/src/route_mode.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_map_polyline/src/polyline_request.dart';
 

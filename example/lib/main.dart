@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_map_polyline/google_map_polyline.dart';
 
@@ -24,7 +23,8 @@ class _MyAppState extends State<MyApp> {
     <PatternItem>[], //line
     <PatternItem>[PatternItem.dash(30.0), PatternItem.gap(20.0)], //dash
     <PatternItem>[PatternItem.dot, PatternItem.gap(10.0)], //dot
-    <PatternItem>[ //dash-dot
+    <PatternItem>[
+      //dash-dot
       PatternItem.dash(30.0),
       PatternItem.gap(20.0),
       PatternItem.dot,
@@ -37,6 +37,8 @@ class _MyAppState extends State<MyApp> {
   LatLng _originLocation = LatLng(40.677939, -73.941755);
   LatLng _destinationLocation = LatLng(40.698432, -73.924038);
 
+  bool _loading = false;
+
   _onMapCreated(GoogleMapController controller) {
     setState(() {
       _controller = controller;
@@ -45,6 +47,7 @@ class _MyAppState extends State<MyApp> {
 
   //Get polyline with Location (latitude and longitude)
   _getPolylinesWithLocation() async {
+    _setLoadingMenu(true);
     List<LatLng> _coordinates =
         await _googleMapPolyline.getCoordinatesWithLocation(
             origin: _originLocation,
@@ -55,10 +58,12 @@ class _MyAppState extends State<MyApp> {
       _polylines.clear();
     });
     _addPolyline(_coordinates);
+    _setLoadingMenu(false);
   }
 
   //Get polyline with Address
   _getPolylinesWithAddress() async {
+    _setLoadingMenu(true);
     List<LatLng> _coordinates =
         await _googleMapPolyline.getPolylineCoordinatesWithAddress(
             origin: '55 Kingston Ave, Brooklyn, NY 11213, USA',
@@ -69,6 +74,7 @@ class _MyAppState extends State<MyApp> {
       _polylines.clear();
     });
     _addPolyline(_coordinates);
+    _setLoadingMenu(false);
   }
 
   _addPolyline(List<LatLng> _coordinates) {
@@ -87,53 +93,72 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  _setLoadingMenu(bool _status) {
+    setState(() {
+      _loading = _status;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       darkTheme: ThemeData(brightness: Brightness.dark),
       home: Scaffold(
-          appBar: AppBar(
-            title: Text('Map Polyline'),
-          ),
-          body: Container(
-            child: LayoutBuilder(
-              builder: (context, cont) {
-                return Column(
-                  children: <Widget>[
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height - 175,
-                      child: GoogleMap(
-                        onMapCreated: _onMapCreated,
-                        polylines: Set<Polyline>.of(_polylines.values),
-                        initialCameraPosition: CameraPosition(
-                          target: _mapInitLocation,
-                          zoom: 15,
-                        ),
+        appBar: AppBar(
+          title: Text('Map Polyline'),
+        ),
+        body: Container(
+          child: LayoutBuilder(
+            builder: (context, cont) {
+              return Column(
+                children: <Widget>[
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height - 175,
+                    child: GoogleMap(
+                      onMapCreated: _onMapCreated,
+                      polylines: Set<Polyline>.of(_polylines.values),
+                      initialCameraPosition: CameraPosition(
+                        target: _mapInitLocation,
+                        zoom: 15,
                       ),
                     ),
-                    Expanded(
-                      child: Align(
-                          alignment: Alignment.center,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              RaisedButton(
-                                child: Text('Polylines wtih Location'),
-                                onPressed: _getPolylinesWithLocation,
-                              ),
-                              RaisedButton(
-                                child: Text('Polylines wtih Address'),
-                                onPressed: _getPolylinesWithAddress,
-                              ),
-                            ],
-                          )),
-                    ),
-                  ],
-                );
-              },
-            ),
-          )),
+                  ),
+                  Expanded(
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            RaisedButton(
+                              child: Text('Polylines wtih Location'),
+                              onPressed: _getPolylinesWithLocation,
+                            ),
+                            RaisedButton(
+                              child: Text('Polylines wtih Address'),
+                              onPressed: _getPolylinesWithAddress,
+                            ),
+                          ],
+                        )),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: _loading
+            ? Container(
+                color: Colors.black.withOpacity(0.75),
+                child: Center(
+                  child: Text(
+                    'Loading...',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              )
+            : Container(),
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
