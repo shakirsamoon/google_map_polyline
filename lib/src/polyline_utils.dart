@@ -20,9 +20,9 @@ class PolylineUtils {
       qParam['destination'] = _data.destinationText;
     } else {
       qParam['origin'] =
-      "${_data.originLoc.latitude},${_data.originLoc.longitude}";
+          "${_data.originLoc.latitude},${_data.originLoc.longitude}";
       qParam['destination'] =
-      "${_data.destinationLoc.latitude},${_data.destinationLoc.longitude}";
+          "${_data.destinationLoc.latitude},${_data.destinationLoc.longitude}";
     }
 
     Response _response;
@@ -33,7 +33,8 @@ class PolylineUtils {
 
     try {
       if (_response.statusCode == 200) {
-        _coordinates = await decodeEncodedPolyline(_response.data['routes'][0]['overview_polyline']['points']);
+        _coordinates = decodeEncodedPolyline(
+            _response.data['routes'][0]['overview_polyline']['points']);
       }
     } catch (e) {
       print('error!!!!');
@@ -80,6 +81,8 @@ class PolylineUtils {
         return 'walking';
       case RouteMode.bicycling:
         return 'bicycling';
+      default:
+        return null;
     }
   }
 }

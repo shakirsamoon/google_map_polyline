@@ -19,7 +19,7 @@ class GoogleMapPolyline {
     @required LatLng destination,
     @required RouteMode mode,
   }) async {
-    _data = await new PolylineRequestData(
+    _data = new PolylineRequestData(
         originLoc: origin,
         destinationLoc: destination,
         mode: mode,
@@ -38,7 +38,7 @@ class GoogleMapPolyline {
     @required String destination,
     @required RouteMode mode,
   }) async {
-    _data = await new PolylineRequestData(
+    _data = new PolylineRequestData(
         originText: origin,
         destinationText: destination,
         mode: mode,
