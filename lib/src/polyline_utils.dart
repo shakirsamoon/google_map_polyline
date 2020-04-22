@@ -33,11 +33,16 @@ class PolylineUtils {
 
     try {
       if (_response.statusCode == 200) {
+        if (_response.data["status"] == "REQUEST_DENIED") {
+          throw Exception(_response.data["error_message"]);
+        }
+
         _coordinates = decodeEncodedPolyline(
             _response.data['routes'][0]['overview_polyline']['points']);
       }
     } catch (e) {
-      print('error!!!!');
+      print('error!!!! $e');
+      throw e;
     }
 
     return _coordinates;
