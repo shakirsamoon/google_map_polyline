@@ -81,6 +81,8 @@ class PolylineUtils {
         return 'walking';
       case RouteMode.bicycling:
         return 'bicycling';
+        case RouteMode.transit:
+        return 'transit';
       default:
         return null;
     }
